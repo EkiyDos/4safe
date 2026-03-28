@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Оплата прошла успешно — 4SafeVPN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:       #1A6BFF;
+      --blue-light: #4D8FFF;
+      --blue-dark:  #0047CC;
+      --green:      #1ABA74;
+      --green-bg:   #E8FBF3;
+      --bg:         #F4F7FF;
+      --white:      #FFFFFF;
+      --text:       #0D1B3E;
+      --text-muted: #5A6A8A;
+      --border:     #D6E2FF;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+    .header-inner {
+      max-width: 900px; margin: 0 auto;
+      height: 64px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 40px; height: 40px;
+      border: 2px solid var(--blue);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 20px; height: 20px; }
+    .logo-text { font-size: 1.15rem; font-weight: 700; color: var(--text); }
+    .logo-text span { color: var(--blue); }
+
+    /* MAIN */
+    main {
+      flex: 1;
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px 24px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 52px 44px;
+      max-width: 520px; width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 48px rgba(26,107,255,0.10);
+    }
+
+    /* Animated checkmark */
+    .check-wrap {
+      width: 96px; height: 96px;
+      margin: 0 auto 30px;
+      position: relative;
+    }
+    .check-circle {
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      background: var(--green-bg);
+      display: flex; align-items: center; justify-content: center;
+      animation: pop .5s cubic-bezier(.175,.885,.32,1.275) both;
+    }
+    .check-circle svg {
+      width: 48px; height: 48px;
+      color: var(--green);
+      animation: draw-check .5s .2s ease both;
+      stroke-dasharray: 80;
+      stroke-dashoffset: 80;
+    }
+    @keyframes pop {
+      0%   { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes draw-check {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* Confetti dots */
+    .confetti { position: absolute; top: 0; left: 0; width: 96px; height: 96px; pointer-events: none; }
+    .conf-dot {
+      position: absolute; border-radius: 50%;
+      animation: burst .6s .3s ease-out both;
+      opacity: 0;
+    }
+    .c1 { width:8px;height:8px;background:var(--blue);top:4px;left:44px; }
+    .c2 { width:6px;height:6px;background:var(--green);top:20px;right:4px; }
+    .c3 { width:7px;height:7px;background:#FFC107;bottom:14px;right:8px; }
+    .c4 { width:5px;height:5px;background:var(--blue-light);bottom:6px;left:20px; }
+    .c5 { width:6px;height:6px;background:var(--green);top:14px;left:6px; }
+    @keyframes burst {
+      0%   { transform: scale(0) translate(0,0); opacity: 1; }
+      80%  { opacity: 1; }
+      100% { transform: scale(1) translate(var(--tx,0), var(--ty,0)); opacity: 0; }
+    }
+    .c1 { --tx: 0px; --ty: -24px; }
+    .c2 { --tx: 20px; --ty: -14px; }
+    .c3 { --tx: 18px; --ty: 16px; }
+    .c4 { --tx: -16px; --ty: 14px; }
+    .c5 { --tx: -20px; --ty: -16px; }
+
+    h1 {
+      font-size: 1.85rem; font-weight: 800;
+      color: var(--text); margin-bottom: 12px;
+      letter-spacing: -0.4px;
+    }
+    .subtitle {
+      font-size: 1rem; color: var(--text-muted);
+      margin-bottom: 32px; line-height: 1.6;
+    }
+    .subtitle strong { color: var(--text); }
+
+    /* Info block */
+    .info-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 22px;
+      text-align: left;
+      margin-bottom: 30px;
+    }
+    .info-row {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .info-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .info-row:first-child { padding-top: 0; }
+    .info-icon {
+      width: 32px; height: 32px; flex-shrink: 0;
+      background: rgba(26,107,255,0.10);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .info-icon svg { width: 16px; height: 16px; color: var(--blue); }
+    .info-text { flex: 1; }
+    .info-text strong { display: block; font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .info-text span { font-size: 0.83rem; color: var(--text-muted); }
+
+    /* Buttons */
+    .btn-tg {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--blue); color: #fff;
+      padding: 14px 32px; border-radius: 50px;
+      font-size: 0.97rem; font-weight: 700;
+      text-decoration: none; width: 100%;
+      justify-content: center;
+      box-shadow: 0 6px 24px rgba(26,107,255,0.30);
+      transition: background .2s, transform .15s, box-shadow .15s;
+      margin-bottom: 12px;
+    }
+    .btn-tg:hover { background: var(--blue-dark); transform: translateY(-1px); box-shadow: 0 10px 32px rgba(26,107,255,0.40); }
+    .btn-tg svg { width: 18px; height: 18px; }
+
+    .btn-home {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      background: transparent; color: var(--text-muted);
+      padding: 12px 32px; border-radius: 50px;
+      font-size: 0.92rem; font-weight: 600;
+      text-decoration: none; width: 100%;
+      border: 1.5px solid var(--border);
+      transition: border-color .2s, color .2s;
+    }
+    .btn-home:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* Timer */
+    .timer-note {
+      font-size: 0.8rem; color: var(--text-muted);
+      margin-top: 20px;
+    }
+    #countdown { font-weight: 700; color: var(--blue); }
+
+    /* FOOTER */
+    footer {
+      background: var(--text);
+      color: rgba(255,255,255,0.55);
+      padding: 24px;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 540px) {
+      .card { padding: 36px 22px; }
+      h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-text"><span>4</span>SafeVPN</span>
+    </a>
+  </div>
+</header>
+
+<main>
+  <div class="card">
+
+    <!-- Animated checkmark -->
+    <div class="check-wrap">
+      <div class="check-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <div class="confetti">
+        <div class="conf-dot c1"></div>
+        <div class="conf-dot c2"></div>
+        <div class="conf-dot c3"></div>
+        <div class="conf-dot c4"></div>
+        <div class="conf-dot c5"></div>
+      </div>
+    </div>
+
+    <h1>Успешно оплачено!</h1>
+    <p class="subtitle">
+      Спасибо за подписку на <strong>4SafeVPN</strong>.<br/>
+      Ваш ключ доступа уже ждёт вас в Telegram-боте.
+    </p>
+
+    <div class="info-box">
+      <div class="info-row">
+        <div class="info-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="info-text">
+          <strong>Откройте Telegram-бот</strong>
+          <span>Ключ подключения и инструкция уже отправлены вам в бот</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="info-text">
+          <strong>Настройте VPN за 1 минуту</strong>
+          <span>Следуйте инструкции в боте — всё очень просто</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="info-text">
+          <strong>Подписка активна</strong>
+          <span>Доступ начинается с момента первого подключения</span>
+        </div>
+      </div>
+    </div>
+
+    <a href="https://t.me/forsafevpnbot" target="_blank" class="btn-tg">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 13.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z"/></svg>
+      Открыть Telegram-бот
+    </a>
+    <a href="index.html" class="btn-home">← Вернуться на главную</a>
+
+    <p class="timer-note">Автоматический переход в бот через <span id="countdown">5</span> сек</p>
+
+  </div>
+</main>
+
+<footer>
+  © 2024 4SafeVPN. Все права защищены.
+</footer>
+
+<script>
+  // Auto-redirect countdown
+  let secs = 5;
+  const el = document.getElementById('countdown');
+  const timer = setInterval(() => {
+    secs--;
+    el.textContent = secs;
+    if (secs <= 0) {
+      clearInterval(timer);
+      window.open('https://t.me/forsafevpnbot', '_blank');
+    }
+  }, 1000);
+</script>
+</body>
+</html>
