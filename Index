@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4SafeVPN — Безопасный и быстрый VPN</title>
+  <meta name="description" content="4SafeVPN — надёжный VPN-сервис для защиты вашей приватности и свободного доступа к интернету." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:       #1A6BFF;
+      --blue-light: #4D8FFF;
+      --blue-dark:  #0047CC;
+      --bg:         #F4F7FF;
+      --white:      #FFFFFF;
+      --text:       #0D1B3E;
+      --text-muted: #5A6A8A;
+      --border:     #D6E2FF;
+      --card-bg:    #FFFFFF;
+      --shadow:     0 4px 32px rgba(26,107,255,0.10);
+      --radius:     18px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 24px;
+      height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .logo-text {
+      font-size: 1.45rem; font-weight: 800; color: var(--text);
+      letter-spacing: -0.4px;
+    }
+    .logo-text span { color: var(--blue); }
+
+    nav { display: flex; gap: 28px; align-items: center; }
+    nav a {
+      text-decoration: none; color: var(--text-muted);
+      font-size: 0.95rem; font-weight: 500;
+      transition: color .2s;
+    }
+    nav a:hover { color: var(--blue); }
+
+    .btn-nav {
+      background: var(--blue); color: #fff !important;
+      padding: 9px 22px; border-radius: 50px;
+      font-weight: 600; font-size: 0.9rem;
+      transition: background .2s, transform .15s;
+    }
+    .btn-nav:hover { background: var(--blue-dark) !important; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 1100px; margin: 0 auto;
+      padding: 90px 24px 70px;
+      display: flex; align-items: center; gap: 60px;
+    }
+    .hero-text { flex: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(26,107,255,0.10);
+      color: var(--blue); border-radius: 50px;
+      padding: 6px 16px; font-size: 0.82rem; font-weight: 600;
+      margin-bottom: 22px;
+    }
+    .hero-badge::before {
+      content: ''; display: inline-block;
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--blue);
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: .5; transform: scale(1.4); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 800; line-height: 1.13;
+      letter-spacing: -1px; color: var(--text);
+      margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--blue); }
+
+    .hero p {
+      font-size: 1.1rem; color: var(--text-muted);
+      max-width: 480px; margin-bottom: 36px;
+    }
+
+    .btn-main {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--blue); color: #fff;
+      padding: 16px 36px; border-radius: 50px;
+      font-size: 1.05rem; font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 8px 28px rgba(26,107,255,0.35);
+      transition: background .2s, transform .18s, box-shadow .18s;
+    }
+    .btn-main:hover {
+      background: var(--blue-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 36px rgba(26,107,255,0.45);
+    }
+    .btn-main svg { width: 20px; height: 20px; }
+
+    .hero-stats {
+      display: inline-flex; align-items: center; gap: 0;
+      margin-top: 40px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 28px;
+      box-shadow: var(--shadow);
+    }
+    .stat { display: flex; flex-direction: column; align-items: center; padding: 0 24px; }
+    .stat-divider {
+      width: 1px; height: 36px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+    .stat-num {
+      font-size: 1.7rem; font-weight: 800; color: var(--blue);
+      line-height: 1;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; white-space: nowrap; }
+
+    .no-logs-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 18px;
+      background: rgba(26,107,255,0.07);
+      border: 1px solid rgba(26,107,255,0.18);
+      border-radius: 50px;
+      padding: 8px 18px;
+      font-size: 0.84rem; font-weight: 600; color: var(--text);
+      max-width: fit-content;
+    }
+    .no-logs-badge svg { width: 15px; height: 15px; color: var(--blue); flex-shrink: 0; }
+
+    /* Hero graphic */
+    .hero-graphic {
+      flex: 0 0 380px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .globe-wrap {
+      position: relative;
+      width: 320px; height: 320px;
+    }
+    .globe-outer {
+      width: 320px; height: 320px;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      position: absolute;
+      animation: spin-slow 18s linear infinite;
+    }
+    .globe-inner {
+      width: 220px; height: 220px;
+      border: 1.5px dashed var(--blue-light);
+      border-radius: 50%;
+      position: absolute;
+      top: 50px; left: 50px;
+      animation: spin-slow 12s linear infinite reverse;
+    }
+    .globe-center {
+      width: 120px; height: 120px;
+      background: linear-gradient(135deg, var(--blue-light), var(--blue-dark));
+      border-radius: 50%;
+      position: absolute;
+      top: 100px; left: 100px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 40px rgba(26,107,255,0.4);
+    }
+    .globe-center svg { width: 52px; height: 52px; color: #fff; }
+    .dot {
+      position: absolute;
+      width: 10px; height: 10px;
+      background: var(--blue);
+      border-radius: 50%;
+      border: 2px solid #fff;
+      box-shadow: 0 0 8px rgba(26,107,255,0.5);
+    }
+    .dot1 { top: 10px; left: 145px; }
+    .dot2 { top: 120px; right: 8px; }
+    .dot3 { bottom: 18px; left: 80px; }
+    .dot4 { top: 58px; left: 28px; }
+    @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    /* ── HOW IT WORKS ── */
+    .section {
+      max-width: 1100px; margin: 0 auto; padding: 70px 24px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800; letter-spacing: -0.5px;
+      color: var(--text); margin-bottom: 12px;
+    }
+    .section-title span { color: var(--blue); }
+    .section-sub {
+      text-align: center; color: var(--text-muted);
+      font-size: 1rem; max-width: 520px; margin: 0 auto 50px;
+    }
+
+    .steps { display: flex; gap: 20px; flex-wrap: wrap; }
+    .step {
+      flex: 1; min-width: 210px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 26px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .step-num {
+      font-size: 2.8rem; font-weight: 900;
+      color: rgba(26,107,255,0.10);
+      position: absolute; top: 16px; right: 20px;
+      line-height: 1;
+    }
+    .step-icon {
+      width: 50px; height: 50px;
+      background: rgba(26,107,255,0.10);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+    }
+    .step-icon svg { width: 26px; height: 26px; color: var(--blue); }
+    .step h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .step p { font-size: 0.88rem; color: var(--text-muted); }
+
+    /* ── FEATURES ── */
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 30px 24px;
+      box-shadow: var(--shadow);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26,107,255,0.15); }
+    .feature-icon {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, rgba(26,107,255,0.15), rgba(26,107,255,0.05));
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
+    }
+    .feature-icon svg { width: 24px; height: 24px; color: var(--blue); }
+    .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { font-size: 0.87rem; color: var(--text-muted); }
+
+    /* ── PRICING ── */
+    .pricing-bg { background: var(--white); padding: 70px 0; }
+    .plans { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+    .plan {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      min-width: 200px; max-width: 255px;
+      flex: 1;
+      box-shadow: var(--shadow);
+      transition: transform .2s;
+    }
+    .plan:hover { transform: translateY(-4px); }
+    .plan.popular {
+      border-color: var(--blue);
+      background: linear-gradient(160deg, #EEF4FF 0%, #fff 100%);
+      position: relative;
+    }
+    .popular-badge {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--blue); color: #fff;
+      font-size: 0.75rem; font-weight: 700;
+      padding: 5px 16px; border-radius: 50px;
+      white-space: nowrap;
+    }
+    .plan-name { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+    .plan-price {
+      font-size: 2.6rem; font-weight: 800; color: var(--text);
+      line-height: 1; margin: 12px 0 4px;
+    }
+    .plan-price span { font-size: 1rem; font-weight: 500; color: var(--text-muted); }
+    .plan-period { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 24px; }
+    .plan-features { list-style: none; margin-bottom: 28px; }
+    .plan-features li {
+      font-size: 0.9rem; color: var(--text);
+      padding: 7px 0; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 9px;
+    }
+    .plan-features li:last-child { border-bottom: none; }
+    .plan-features li::before {
+      content: '';
+      width: 16px; height: 16px; flex-shrink: 0;
+      background: rgba(26,107,255,0.12);
+      border-radius: 50%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231A6BFF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+      background-size: 10px; background-repeat: no-repeat; background-position: center;
+    }
+    .btn-plan {
+      display: block; text-align: center;
+      background: var(--blue); color: #fff;
+      padding: 13px; border-radius: 50px;
+      font-size: 0.95rem; font-weight: 700;
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+    }
+    .btn-plan:hover { background: var(--blue-dark); transform: translateY(-1px); }
+    .plan:not(.popular) .btn-plan {
+      background: transparent;
+      color: var(--blue);
+      border: 2px solid var(--blue);
+    }
+    .plan:not(.popular) .btn-plan:hover { background: rgba(26,107,255,0.08); }
+
+    /* ── FAQ ── */
+    .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .faq-q {
+      padding: 20px 24px;
+      font-weight: 600; font-size: 0.97rem;
+      cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      user-select: none;
+    }
+    .faq-q::after {
+      content: '+';
+      font-size: 1.4rem; color: var(--blue);
+      transition: transform .25s;
+      flex-shrink: 0; margin-left: 12px;
+    }
+    .faq-item.open .faq-q::after { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height .35s ease, padding .25s;
+      font-size: 0.9rem; color: var(--text-muted);
+      padding: 0 24px;
+    }
+    .faq-item.open .faq-a { max-height: 200px; padding: 0 24px 20px; }
+
+    /* ── CTA BOTTOM ── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 60%, var(--blue-light) 100%);
+      padding: 80px 24px;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800; color: #fff;
+      margin-bottom: 14px; letter-spacing: -0.5px;
+    }
+    .cta-section p { color: rgba(255,255,255,0.75); font-size: 1.05rem; margin-bottom: 36px; }
+    .btn-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #fff; color: var(--blue);
+      padding: 16px 40px; border-radius: 50px;
+      font-size: 1.05rem; font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      transition: transform .18s, box-shadow .18s;
+    }
+    .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(0,0,0,0.24); }
+    .btn-cta svg { width: 20px; height: 20px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text);
+      color: rgba(255,255,255,0.6);
+      padding: 40px 24px;
+      text-align: center;
+      font-size: 0.88rem;
+    }
+    footer .footer-inner { max-width: 1100px; margin: 0 auto; }
+    footer a { color: rgba(255,255,255,0.75); text-decoration: none; }
+    footer a:hover { color: #fff; }
+    .footer-links { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .hero { flex-direction: column; padding: 60px 24px 40px; text-align: center; }
+      .hero p { margin: 0 auto 32px; }
+      .hero-stats { justify-content: center; }
+      .hero-graphic { display: none; }
+      nav a:not(.btn-nav) { display: none; }
+    }
+    @media (max-width: 560px) {
+      .plans { flex-direction: column; align-items: center; }
+      .plan { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">
+        <img src="logo.png" alt="4SafeVPN лого" />
+      </div>
+      <span class="logo-text"><span>4</span>SafeVPN</span>
+    </a>
+    <nav>
+      <a href="#how">Как работает</a>
+      <a href="#features">Преимущества</a>
+      <a href="#pricing">Цены</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://t.me/forsafevpnbot" target="_blank" class="btn-nav">Начать →</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-badge">Работает сейчас · Мгновенный доступ</div>
+    <h1>Ваша свобода<br/>в сети — с <span>4SafeVPN</span></h1>
+    <p>Быстрый, надёжный и полностью приватный VPN. Подключитесь за 30 секунд и пользуйтесь интернетом без ограничений.</p>
+    <a href="https://t.me/forsafevpnbot" target="_blank" class="btn-main">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 13.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z"/></svg>
+      Начать пользоваться
+    </a>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">50+</span><span class="stat-label">серверов по миру</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">30 сек</span><span class="stat-label">до подключения</span></div>
+    </div>
+    <div class="no-logs-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/><line x1="1" y1="1" x2="23" y2="23"/>
+      </svg>
+      Мы не собираем и не храним данные о вашей активности
+    </div>
+  </div>
+  <div class="hero-graphic">
+    <div class="globe-wrap">
+      <div class="globe-outer"></div>
+      <div class="globe-inner"></div>
+      <div class="globe-center">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+      </div>
+      <div class="dot dot1"></div>
+      <div class="dot dot2"></div>
+      <div class="dot dot3"></div>
+      <div class="dot dot4"></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" style="background: var(--white); padding: 70px 0;">
+  <div class="section" style="padding-top:0; padding-bottom:0;">
+    <h2 class="section-title">Как это <span>работает?</span></h2>
+    <p class="section-sub">Всего три шага — и вы уже под защитой</p>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>Откройте Telegram-бот</h3>
+        <p>Нажмите кнопку «Начать пользоваться» — откроется наш бот в Telegram.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        </div>
+        <h3>Выберите тариф и оплатите</h3>
+        <p>Удобные тарифы — от одного месяца. Оплата прямо в боте, быстро и безопасно.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Подключитесь и пользуйтесь</h3>
+        <p>Получите ключ доступа и сразу пользуйтесь — без ограничений, рекламы и слежки.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="section">
+  <h2 class="section-title">Почему <span>4SafeVPN?</span></h2>
+  <p class="section-sub">Мы строим сервис, которому можно доверять</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <h3>Шифрование AES-256</h3>
+      <p>Военный уровень защиты. Ваш трафик зашифрован и недоступен третьим лицам.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <h3>Высокая скорость</h3>
+      <p>Оптимизированные серверы обеспечивают быстрый интернет без задержек и потерь.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+      </div>
+      <h3>Нет логов</h3>
+      <p>Политика строгого no-log. Мы не храним данные о вашей активности в сети.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      </div>
+      <h3>50+ серверов</h3>
+      <p>Серверы в Европе, Азии и Америке. Всегда найдёте быстрый и стабильный узел.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+      </div>
+      <h3>Все устройства</h3>
+      <p>iOS, Android, Windows, macOS, Linux — одна подписка для всех ваших гаджетов.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <h3>Поддержка 24/7</h3>
+      <p>Наша команда всегда на связи в Telegram. Ответим быстро и поможем с настройкой.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<div id="pricing" class="pricing-bg">
+  <div class="section" style="padding-top:0; padding-bottom:0;">
+    <h2 class="section-title">Тарифы</h2>
+    <p class="section-sub">Честные цены без скрытых платежей</p>
+    <div class="plans">
+      <div class="plan">
+        <div class="plan-name">1 месяц</div>
+        <div class="plan-price">99 <span>₽</span></div>
+        <div class="plan-period">разовая оплата</div>
+        <ul class="plan-features">
+          <li>1 устройство</li>
+          <li>50+ серверов</li>
+          <li>AES-256</li>
+          <li>Без логов</li>
+        </ul>
+        <a href="https://t.me/forsafevpnbot" target="_blank" class="btn-plan">Выбрать</a>
+      </div>
+      <div class="plan">
+        <div class="plan-name">3 месяца</div>
+        <div class="plan-price">249 <span>₽</span></div>
+        <div class="plan-period">83 ₽ в месяц</div>
+        <ul class="plan-features">
+          <li>2 устройства</li>
+          <li>50+ серверов</li>
+          <li>AES-256</li>
+          <li>Без логов</li>
+        </ul>
+        <a href="https://t.me/forsafevpnbot" target="_blank" class="btn-plan">Выбрать</a>
+      </div>
+      <div class="plan popular">
+        <div class="popular-badge">✦ Выгодно</div>
+        <div class="plan-name">6 месяцев</div>
+        <div class="plan-price">499 <span>₽</span></div>
+        <div class="plan-period">83 ₽ в месяц</div>
+        <ul class="plan-features">
+          <li>3 устройства</li>
+          <li>50+ серверов</li>
+          <li>AES-256</li>
+          <li>Без логов</li>
+          <li>Приоритетная поддержка</li>
+        </ul>
+        <a href="https://t.me/forsafevpnbot" target="_blank" class="btn-plan">Выбрать</a>
+      </div>
+      <div class="plan">
+        <div class="plan-name">1 год</div>
+        <div class="plan-price">899 <span>₽</span></div>
+        <div class="plan-period">75 ₽ в месяц</div>
+        <ul class="plan-features">
+          <li>5 устройств</li>
+          <li>50+ серверов</li>
+          <li>AES-256</li>
+          <li>Без логов</li>
+          <li>Приоритетная поддержка</li>
+          <li>Выделенный IP</li>
+        </ul>
+        <a href="https://t.me/forsafevpnbot" target="_blank" class="btn-plan">Выбрать</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section id="faq" class="section">
+  <h2 class="section-title">Часто задаваемые <span>вопросы</span></h2>
+  <p class="section-sub">Если не нашли ответ — напишите нам в Telegram</p>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">Как быстро активируется подписка?</div>
+      <div class="faq-a">Мгновенно. После оплаты в Telegram-боте вы сразу получаете ключ подключения и инструкцию по настройке.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Какие устройства поддерживаются?</div>
+      <div class="faq-a">Поддерживаются iOS, Android, Windows, macOS и Linux. Один ключ можно использовать на нескольких устройствах в зависимости от тарифа.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Вы храните мои данные и логи?</div>
+      <div class="faq-a">Нет. Мы придерживаемся строгой политики no-log. Данные о вашей активности, посещённых сайтах и трафике не сохраняются.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Можно ли получить возврат средств?</div>
+      <div class="faq-a">Да, в течение 3 дней с момента оплаты. Обратитесь к нам в Telegram — разберёмся и вернём средства.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Будет ли VPN работать в России?</div>
+      <div class="faq-a">Да. Наш сервис работает в России и других странах. Мы постоянно обновляем серверы и инфраструктуру для обеспечения стабильного соединения.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Начните прямо сейчас</h2>
+  <p>Подключитесь за 30 секунд — никаких сложных настроек</p>
+  <a href="https://t.me/forsafevpnbot" target="_blank" class="btn-cta">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 13.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z"/></svg>
+    Открыть в Telegram
+  </a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="#">Главная</a>
+      <a href="#features">Преимущества</a>
+      <a href="#pricing">Тарифы</a>
+      <a href="https://t.me/forsafevpnbot" target="_blank">Telegram-бот</a>
+    </div>
+    <p>© 2024 4SafeVPN. Все права защищены.</p>
+  </div>
+</footer>
+
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
